@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>رحلة الانتماء</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,'Segoe UI',Tahoma,Arial,sans-serif;background:#f0f4f8;min-height:100vh;direction:rtl}
+.wrap{max-width:480px;margin:0 auto;padding:1rem}
+.screen{display:none;animation:fi .3s ease}
+.screen.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero{background:linear-gradient(135deg,#1a3a5c,#0d5c3a);border-radius:18px;padding:2rem 1.5rem;text-align:center;color:white;margin-bottom:1.25rem}
+.hero-t{font-size:1.9rem;font-weight:900;margin-bottom:.3rem}
+.hero-s{font-size:.9rem;opacity:.85}
+.card{background:white;border-radius:14px;padding:1.25rem;margin-bottom:.75rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+label{font-size:.9rem;color:#666;display:block;margin-bottom:.5rem;text-align:center}
+input[type=text]{width:100%;padding:.75rem 1rem;border-radius:10px;border:1.5px solid #ddd;font-family:inherit;font-size:1.05rem;text-align:center;background:#fafafa;color:#222;outline:none;transition:border .2s}
+input[type=text]:focus{border-color:#1a3a5c}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:.9rem;border-radius:10px;border:none;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.5rem}
+.btn-p{background:#1a3a5c;color:white}.btn-p:hover{background:#0d2a45}
+.btn-g{background:#0d5c3a;color:white}.btn-g:hover{background:#094d30}
+.btn-gold{background:#c8a84b;color:white}.btn-gold:hover{background:#a88a35}
+.btn-o{background:white;color:#1a3a5c;border:2px solid #1a3a5c}
+.btn-sm{padding:.6rem 1.2rem;width:auto;font-size:.88rem;border-radius:8px}
+.pw{background:#e8edf2;border-radius:8px;height:10px;margin-bottom:1rem;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,#1a3a5c,#0d5c3a);border-radius:8px;transition:width .6s}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;gap:.5rem;flex-wrap:wrap}
+.bn{background:white;border-radius:8px;padding:.4rem .9rem;font-size:.85rem;color:#555;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.bs{background:#1a3a5c;color:white;border-radius:8px;padding:.4rem .9rem;font-size:.9rem;font-weight:700}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem}
+.sc{background:white;border-radius:12px;padding:.9rem;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s;position:relative;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.sc:hover:not(.dn):not(.lk){border-color:#1a3a5c;transform:translateY(-2px)}
+.dn{border-color:#0d5c3a!important;background:#f0faf5}
+.lk{opacity:.45;cursor:not-allowed}
+.se{font-size:2rem;margin-bottom:.3rem}
+.sn{font-size:.78rem;font-weight:700;color:#222;margin-bottom:.2rem}
+.ss{font-size:.7rem;color:#888}
+.sb2{position:absolute;top:5px;left:5px;width:28px;height:28px;border-radius:50%;border:2px solid #0d5c3a;background:white;display:flex;align-items:center;justify-content:center;font-size:.85rem;transform:scale(0);transition:transform .4s cubic-bezier(.175,.885,.32,1.275)}
+.dn .sb2{transform:scale(1)}
+.qh{background:white;border-radius:12px;padding:.9rem 1rem;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.ti{background:#faeeda;color:#633806;border-radius:8px;padding:.35rem .75rem;font-weight:700;font-size:.95rem;min-width:56px;text-align:center}
+.ti.red{background:#fcebeb;color:#791f1f}
+.qcard{background:white;border-radius:12px;padding:1.1rem;margin-bottom:.75rem;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.qb{display:inline-block;background:#e6f1fb;color:#0c447c;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700;margin-bottom:.6rem}
+.qt2{font-size:1rem;font-weight:600;color:#222;line-height:1.65}
+.og{display:grid;gap:.55rem;margin-bottom:.75rem}
+.ob{display:flex;align-items:center;gap:10px;padding:.85rem .9rem;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.92rem;color:#222;text-align:right;transition:all .15s;width:100%}
+.ob:hover:not(:disabled){border-color:#1a3a5c;background:#eef4fb}
+.ob.cor{background:#e8f7ef;border-color:#0d5c3a;color:#0d5c3a}
+.ob.wr{background:#fdecea;border-color:#c62828;color:#7f1c1c}
+.ol{width:26px;height:26px;border-radius:50%;background:#f0f0f0;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.tfg{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem}
+.tfb{padding:1.1rem;border-radius:10px;border:1.5px solid #e0e0e0;background:white;font-family:inherit;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .15s;color:#222}
+.tfb:hover:not(:disabled){transform:scale(1.02)}
+.tfb.cor{background:#e8f7ef;border-color:#0d5c3a;color:#0d5c3a}
+.tfb.wr{background:#fdecea;border-color:#c62828;color:#7f1c1c}
+.fb{border-radius:10px;padding:.85rem .9rem;margin-bottom:.75rem;font-size:.9rem;font-weight:600;display:none;align-items:flex-start;gap:8px;line-height:1.5}
+.fb.show{display:flex}
+.fok{background:#e8f7ef;color:#0d5c3a;border:1px solid #0d5c3a}
+.ferr{background:#fdecea;color:#7f1c1c;border:1px solid #c62828}
+.sw{border:3px solid #0d5c3a;border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1rem;background:white;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.sb3{width:90px;height:90px;border-radius:50%;border:4px solid #0d5c3a;background:#e8f7ef;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2.8rem}
+/* CERT */
+.co{background:white;border:4px double #c8a84b;border-radius:18px;padding:1.5rem 1.25rem;text-align:center;margin-bottom:1rem;position:relative}
+.ci{border:1.5px solid #e8d5a0;border-radius:12px;padding:1.1rem;position:relative}
+.cc{position:absolute;color:#c8a84b;font-size:1.3rem;line-height:1}
+.cc.tl{top:8px;right:8px}.cc.tr{top:8px;left:8px}
+.cc.bl{bottom:8px;right:8px}.cc.br{bottom:8px;left:8px}
+.ct{font-size:1.7rem;font-weight:900;color:#c8a84b;margin-bottom:.2rem}
+.csub{font-size:.72rem;color:#999;margin-bottom:.75rem}
+.chr{border:none;border-top:1.5px solid #e8d5a0;margin:.6rem 0}
+.cn{font-size:1.4rem;font-weight:900;color:#1a3a5c;border-bottom:2.5px solid #c8a84b;display:inline-block;padding-bottom:.3rem;margin:.3rem 0 .75rem}
+.cb{font-size:.78rem;color:#555;line-height:1.85;margin-bottom:.75rem}
+.cst{display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap;margin:.6rem 0}
+.csi{text-align:center}
+.csc{width:42px;height:42px;border-radius:50%;border:2px solid #c8a84b;background:#faf5e8;margin:0 auto 2px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.csl{font-size:.55rem;color:#888;max-width:44px}
+.cscr{font-size:1.9rem;font-weight:900;color:#1a3a5c;margin:.3rem 0}
+.cstar{color:#c8a84b;font-size:1rem;margin-bottom:.3rem}
+.vbox{background:#f0faf5;border:1.5px solid #0d5c3a;border-radius:10px;padding:.65rem;margin:.65rem 0;display:flex;align-items:center;gap:.65rem;text-align:right}
+.vcode{font-size:.6rem;color:#0d5c3a;font-weight:700;word-break:break-all;font-family:monospace;margin-top:.2rem}
+.csig{font-size:.65rem;color:#999}
+.vr{border-radius:12px;padding:1rem;text-align:center;margin-top:1rem}
+.vok{background:#e8f7ef;border:2px solid #0d5c3a}
+.vno{background:#fdecea;border:2px solid #c62828}
+@media print{
+  body{background:white!important}
+  .no-print{display:none!important}
+  .screen{display:none!important}
+  #s-cert{display:block!important;padding:0!important}
+  .wrap{padding:0!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="screen active" id="s-intro">
+  <div class="hero">
+    <div style="font-size:2.2rem;margin-bottom:.4rem">🗺️</div>
+    <div class="hero-t">رحلة الانتماء</div>
+    <div class="hero-s">اكتشف مكونات الهوية الإماراتية</div>
+  </div>
+  <div class="card">
+    <label>أدخل اسمك لتبدأ الرحلة</label>
+    <input type="text" id="pname" placeholder="اسمك هنا..." maxlength="30" style="margin-bottom:1rem">
+    <button class="btn btn-p" onclick="startGame()">ابدأ الرحلة ←</button>
+  </div>
+  <div class="card" style="text-align:center;font-size:.8rem;color:#666;line-height:1.8">
+    <strong style="color:#222">كيف تلعب؟</strong><br>
+    6 محطات • أسئلة متنوعة • اختام • شهادة برمز تحقق
+  </div>
+  <button class="btn btn-o btn-sm" style="width:auto;margin:.5rem auto 0" onclick="show('s-verify')">🔍 تحقق من شهادة</button>
+</div>
+
+<div class="screen" id="s-map">
+  <div class="mh">
+    <div class="bn">🧭 <span id="mpn"></span></div>
+    <div class="bs">⭐ <span id="msc">0</span> نقطة</div>
+  </div>
+  <div class="pw"><div class="pf" id="prog" style="width:0%"></div></div>
+  <div class="sg" id="sg"></div>
+  <button class="btn btn-g no-print" id="finish-btn" style="display:none" onclick="showCert()">🏆 احصل على شهادتك</button>
+</div>
+
+<div class="screen" id="s-quiz">
+  <div class="qh">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:1.6rem" id="qi"></span>
+      <div>
+        <div style="font-weight:700;font-size:.95rem;color:#222" id="qtit"></div>
+        <div style="font-size:.72rem;color:#888" id="qcnt"></div>
+      </div>
+    </div>
+    <div class="ti" id="timer">⏱ 20</div>
+  </div>
+  <div class="qcard">
+    <div class="qb" id="qbadge"></div>
+    <div class="qt2" id="qtext"></div>
+  </div>
+  <div id="ans"></div>
+  <div class="fb" id="fb"><span id="fbi"></span><span id="fbt"></span></div>
+  <button class="btn btn-p no-print" id="nxtbtn" style="display:none" onclick="nextQ()">السؤال التالي ←</button>
+</div>
+
+<div class="screen" id="s-stamp">
+  <div style="text-align:center;margin-bottom:1rem;font-size:1.1rem;font-weight:700">مبروك! 🎉 حصلت على الختم</div>
+  <div class="sw">
+    <div class="sb3" id="stei"></div>
+    <div style="font-size:1.1rem;font-weight:700;color:#0d5c3a" id="stename"></div>
+    <div style="font-size:.85rem;color:#666;margin-top:.3rem" id="stepts"></div>
+  </div>
+  <button class="btn btn-p" onclick="backToMap()">← العودة للخريطة</button>
+</div>
+
+<div class="screen" id="s-cert">
+  <div class="co" id="cert-area">
+    <div class="ci">
+      <span class="cc tl">✦</span><span class="cc tr">✦</span>
+      <span class="cc bl">✦</span><span class="cc br">✦</span>
+      <div style="font-size:2rem;margin-bottom:.4rem">🇦🇪</div>
+      <div class="ct">شهادة تقدير</div>
+      <div class="csub">رحلة الانتماء — الهوية الإماراتية</div>
+      <hr class="chr">
+      <div style="font-size:.78rem;color:#888;margin-bottom:.2rem">تُمنح هذه الشهادة إلى</div>
+      <div><span class="cn" id="cname"></span></div>
+      <div class="cb">تقديراً لإتمامه رحلة الانتماء باجتهاد ونجاح،<br>واكتشافه مكونات الهوية الإماراتية في محطاتها الست.</div>
+      <div class="cst" id="cstamps"></div>
+      <hr class="chr">
+      <div style="font-size:.78rem;color:#888">مجموع النقاط</div>
+      <div class="cscr" id="cscore"></div>
+      <div class="cstar" id="cstars"></div>
+      <hr class="chr">
+      <div style="font-size:.7rem;color:#555;font-weight:600;margin-bottom:.4rem">رمز التحقق من الشهادة</div>
+      <div class="vbox">
+        <div id="cert-qr" style="flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:.7rem;color:#0d5c3a;font-weight:700">امسح للتحقق من الشهادة</div>
+          <div class="vcode" id="ccode"></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:.65rem;flex-wrap:wrap;gap:.3rem">
+        <div class="csig">التوقيع: .....................</div>
+        <div class="csig" id="cdate"></div>
+      </div>
+      <div class="csig" style="margin-top:.4rem;text-align:center">سائلين الله لك دوام التوفيق والنجاح 🌟</div>
+    </div>
+  </div>
+  <div class="no-print">
+    <button class="btn btn-gold" onclick="window.print()">🖨️ طباعة الشهادة / حفظ PDF</button>
+    <button class="btn btn-o" onclick="restartGame()">🔄 العب مجدداً</button>
+    <div class="card" style="font-size:.75rem;color:#666;text-align:center;line-height:1.7;margin-top:.5rem">
+      اختر <strong>"حفظ كـ PDF"</strong> من الطابعات لحفظ الشهادة<br>
+      المعلم يمسح QR للتحقق من صحة الشهادة ✅
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-verify">
+  <div class="card">
+    <div style="text-align:center;font-size:1.4rem;margin-bottom:.5rem">🔍</div>
+    <div style="text-align:center;font-size:1rem;font-weight:700;color:#222;margin-bottom:.5rem">التحقق من شهادة</div>
+    <label>أدخل رمز التحقق</label>
+    <input type="text" id="vinput" placeholder="UAE-XXXX-XXXX-XXXXX" style="margin-bottom:1rem;font-family:monospace;font-size:.88rem">
+    <button class="btn btn-p" onclick="verifyCert()">تحقق ✓</button>
+    <button class="btn btn-o" onclick="show('s-intro')">← العودة</button>
+    <div class="vr" id="vres" style="display:none"></div>
+  </div>
+</div>
+
+</div>
+<script>
+
+// Minimal QR Code generator - pure JS, no dependencies
+// Based on qrcodejs, stripped down for alphanumeric + byte mode
+var QRCode=(function(){function a(a){this.mode=a}a.MODE_NUMBER=1<<0;a.MODE_ALPHA_NUM=1<<1;a.MODE_8BIT_BYTE=1<<2;a.MODE_KANJI=1<<3;function b(a,b){this.totalCount=a;this.dataCount=b}function c(){this.buffer=[];this.length=0}c.prototype={get:function(a){var b=Math.floor(a/8);return((this.buffer[b]>>>7-a%8)&1)==1},put:function(a,b){for(var c=0;c<b;c++)this.putBit(((a>>>(b-c-1))&1)==1)},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);if(this.buffer.length<=b)this.buffer.push(0);if(a)this.buffer[b]|=0x80>>>this.length%8;this.length++}};function d(a){if(a<1||a>40)throw new Error("bad rs block @ typeNumber:"+a);var c=e.RS_BLOCK_TABLE[(a-1)*4];if(c==undefined)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+0);var d=c.length/3,f=[];for(var g=0;g<d;g++){var h=c[g*3+0],i=c[g*3+1],j=c[g*3+2];for(var k=0;k<h;k++)f.push(new b(i,j))}return f}var e={RS_BLOCK_TABLE:[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]]};function f(a,b){return d(a)}function g(a,b,c,d){this._el=a;this._htOption={width:c||256,height:d||256,typeNumber:-1,colorDark:b&&b.colorDark||"#000",colorLight:b&&b.colorLight||"#fff",correctLevel:b&&b.correctLevel||3};this._oQRCode=null;this._oDrawing=new h(a,this._htOption);if(b&&b.text)this.makeCode(b.text)}g.prototype.makeCode=function(a){this._oQRCode=new i(-1,this._htOption.correctLevel);this._oQRCode.addData(a);this._oQRCode.make();this._el.title=a;this._oDrawing.draw(this._oQRCode)};function h(a,b){this._el=a;this._htOption=b}h.prototype.draw=function(b){var e=this._htOption.width,f=this._htOption.height;var g=document.createElement("canvas");g.width=e;g.height=f;var h=b.getModuleCount();var i=Math.floor(e/h);var j=Math.floor(f/h);var k=g.getContext("2d");k.clearRect(0,0,e,f);k.fillStyle=this._htOption.colorLight;k.fillRect(0,0,e,f);for(var l=0;l<h;l++){for(var m=0;m<h;m++){var n=b.isDark(l,m);k.fillStyle=n?this._htOption.colorDark:this._htOption.colorLight;k.fillRect(m*i,l*j,i,j)}}this._el.appendChild(g)};var i=function(){var a=function(a,b){this.typeNumber=a;this.errorCorrectLevel=b;this.modules=null;this.moduleCount=0;this.dataCache=null;this.dataList=[]};a.prototype={addData:function(a){var b=new j(a);this.dataList.push(b);this.dataCache=null},isDark:function(a,b){if(a<0||this.moduleCount<=a||b<0||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){if(this.typeNumber<1){var a=1;for(a=1;a<40;a++){var b=f(a,this.errorCorrectLevel);var c=new c2;c.put(4,4);c.put(b[0].dataCount,l(a,4));for(var d=0;d<this.dataList.length;d++){var e=this.dataList[d];e.write(c)}if(c.getLengthInBits()<=b[0].dataCount*8)break}this.typeNumber=a}this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,b){this.moduleCount=this.typeNumber*4+17;this.modules=new Array(this.moduleCount);for(var c=0;c<this.moduleCount;c++){this.modules[c]=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++)this.modules[c][d]=null}this.setupPositionProbePattern(0,0);this.setupPositionProbePattern(this.moduleCount-7,0);this.setupPositionProbePattern(0,this.moduleCount-7);this.setupPositionAdjustPattern();this.setupTimingPattern();this.setupTypeInfo(a,b);if(this.typeNumber>=7)this.setupTypeNumber(a);if(this.dataCache==null)this.dataCache=p(this.typeNumber,this.errorCorrectLevel,this.dataList);this.mapData(this.dataCache,b)},setupPositionProbePattern:function(a,b){for(var c=-1;c<=7;c++){if(a+c<=-1||this.moduleCount<=a+c)continue;for(var d=-1;d<=7;d++){if(b+d<=-1||this.moduleCount<=b+d)continue;if((0<=c&&c<=6&&(d==0||d==6))||(0<=d&&d<=6&&(c==0||c==6))||(2<=c&&c<=4&&2<=d&&d<=4))this.modules[a+c][b+d]=true;else this.modules[a+c][b+d]=false}}},getBestMaskPattern:function(){var a=0;var b=0;for(var c=0;c<8;c++){this.makeImpl(!0,c);var d=k.getLostPoint(this);if(c==0||a>d){a=d;b=c}}return b},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++){if(this.modules[a][6]!=null)continue;this.modules[a][6]=(a%2)==0}for(var b=8;b<this.moduleCount-8;b++){if(this.modules[6][b]!=null)continue;this.modules[6][b]=(b%2)==0}},setupPositionAdjustPattern:function(){var a=k.getPatternPosition(this.typeNumber);for(var b=0;b<a.length;b++){for(var c=0;c<a.length;c++){var d=a[b];var e=a[c];if(this.modules[d][e]!=null)continue;for(var f=-2;f<=2;f++){for(var g=-2;g<=2;g++){if(f==-2||f==2||g==-2||g==2||(f==0&&g==0))this.modules[d+f][e+g]=true;else this.modules[d+f][e+g]=false}}}}},setupTypeNumber:function(a){var b=k.getBCHTypeNumber(this.typeNumber);for(var c=0;c<18;c++){var d=(!a&&((b>>c)&1)==1);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var e=0;e<18;e++){var d=(!a&&((b>>e)&1)==1);this.modules[e%3+this.moduleCount-8-3][Math.floor(e/3)]=d}},setupTypeInfo:function(a,b){var c=this.errorCorrectLevel<<3|b;var d=k.getBCHTypeInfo(c);for(var e=0;e<=5;e++)this.modules[e][8]=(!a&&((d>>e)&1)==1);this.modules[7][8]=(!a&&((d>>6)&1)==1);this.modules[8][8]=(!a&&((d>>7)&1)==1);this.modules[8][7]=(!a&&((d>>8)&1)==1);for(var f=9;f<15;f++)this.modules[14-f][8]=(!a&&((d>>f)&1)==1);for(var g=0;g<7;g++)this.modules[8][this.moduleCount-7+g]=(!a&&((d>>(13-g))&1)==1);this.modules[8][this.moduleCount-8]=!a},mapData:function(a,b){var c=-1;var d=this.moduleCount-1;var e=7;var f=false;for(var g=0;g<a.length;g++){for(var h=0;h<8;h++){var i=((a[g]>>>7-h)&1)==1;if(k.getMask(b,d,c+e)&&i)i=!i;this.modules[d][c+e]=i;e--;if(e==-1){c++;e=0;d+=f?1:-1;if(d<0||this.moduleCount<=d){d-=f?1:-1;c-=2;f=!f;if(d<0||this.moduleCount<=d){break}}}}}},};var j=function(a){this.data=a;this.parsedData=[];for(var b=0,c=this.data.length;b<c;b++){var d=this.data.charCodeAt(b);if(d>0xFFFF){this.parsedData.push(((d-0x10000)>>10)+0xD800);this.parsedData.push(((d-0x10000)&0x3FF)+0xDC00)}else this.parsedData.push(d)}if(this.parsedData.length!=this.data.length){this.parsedData.unshift(239);this.parsedData.unshift(187);this.parsedData.unshift(191)}};j.prototype={getMode:function(){return a.MODE_8BIT_BYTE},getLength:function(a){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;b<c;b++)a.put(this.parsedData[b],8)}};function l(a,b){return a<10?9:a<27?11:13}var c2=c;var k={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],getBCHTypeInfo:function(a){var b=a<<10;while(k.getBCHDigit(b)-k.getBCHDigit(1335)>=0)b^=(1335<<(k.getBCHDigit(b)-k.getBCHDigit(1335)));return((a<<10)|b)^1011111010100101},getBCHTypeNumber:function(a){var b=a<<12;while(k.getBCHDigit(b)-k.getBCHDigit(7973)>=0)b^=(7973<<(k.getBCHDigit(b)-k.getBCHDigit(7973)));return(a<<12)|b},getBCHDigit:function(a){var b=0;while(a!=0){b++;a>>>=1}return b},getPatternPosition:function(a){return k.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case 0:return(b+c)%2==0;case 1:return b%2==0;case 2:return c%3==0;case 3:return(b+c)%3==0;case 4:return(Math.floor(b/2)+Math.floor(c/3))%2==0;case 5:return(b*c)%2+(b*c)%3==0;case 6:return((b*c)%2+(b*c)%3)%2==0;case 7:return((b+c)%2+(b*c)%3)%2==0;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){var b=new m([1],0);for(var c=0;c<a;c++)b=b.multiply(new m([1,n.gexp(c)],0));return b},getLostPoint:function(a){var b=a.getModuleCount();var c=0;for(var d=0;d<b;d++){for(var e=0;e<b;e++){var f=0;for(var g=-1;g<=1;g++){if(d+g<0||b<=d+g)continue;for(var h=-1;h<=1;h++){if(e+h<0||b<=e+h)continue;if(g==0&&h==0)continue;if(a.isDark(d,e)==a.isDark(d+g,e+h))f++}}if(f>5)c+=(3+f-5)}}for(var i=0;i<b-1;i++){for(var j=0;j<b-1;j++){var l=0;if(a.isDark(i,j))l++;if(a.isDark(i+1,j))l++;if(a.isDark(i,j+1))l++;if(a.isDark(i+1,j+1))l++;if(l==0||l==4)c+=3}}for(var m2=0;m2<b;m2++){for(var n2=0;n2<b-6;n2++){if(a.isDark(m2,n2)&&!a.isDark(m2,n2+1)&&a.isDark(m2,n2+2)&&a.isDark(m2,n2+3)&&a.isDark(m2,n2+4)&&!a.isDark(m2,n2+5)&&a.isDark(m2,n2+6))c+=40}}for(var o=0;o<b;o++){for(var p2=0;p2<b-6;p2++){if(a.isDark(p2,o)&&!a.isDark(p2+1,o)&&a.isDark(p2+2,o)&&a.isDark(p2+3,o)&&a.isDark(p2+4,o)&&!a.isDark(p2+5,o)&&a.isDark(p2+6,o))c+=40}}var q=0;for(var r=0;r<b;r++){for(var s=0;s<b;s++){if(a.isDark(r,s))q++}}var t=Math.abs(100*q/b/b-50)/5;c+=t*10;return c}};var m=function(a,b){if(a.length==undefined)throw new Error(a.length+"/"+b);var c=0;for(var d=0;d<a.length;d++){if(a[d]!=0){c=d;break}}this.num=new Array(a.length-c+b);for(var e=0;e<a.length-c;e++)this.num[e]=a[e+c]};m.prototype={get:function(a){return this.num[this.num.length-1-a]},getLength:function(){return this.num.length-1},multiply:function(a){var b=new Array(this.getLength()+a.getLength()+1);for(var c=0;c<=this.getLength();c++){for(var d=0;d<=a.getLength();d++)b[c+d]^=n.gexp(n.glog(this.get(c))+n.glog(a.get(d)))}return new m(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;var b=n.glog(this.get(this.getLength()))-n.glog(a.get(a.getLength()));var c=new Array(this.num.length);for(var d=0;d<this.num.length;d++)c[d]=this.num[d];for(var e=0;e<=a.getLength();e++)c[c.length-1-this.getLength()+e]^=n.gexp(n.glog(a.get(e))+b);return new m(c,0).mod(a)}};var n={glog:function(a){if(a<1)throw new Error("glog("+a+")");return n.LOG_TABLE[a]},gexp:function(a){while(a<0)a+=255;while(a>=256)a-=255;return n.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)};for(var o=0;o<8;o++)n.EXP_TABLE[o]=1<<o;for(var o=8;o<256;o++)n.EXP_TABLE[o]=n.EXP_TABLE[o-4]^n.EXP_TABLE[o-5]^n.EXP_TABLE[o-6]^n.EXP_TABLE[o-8];for(var o=0;o<255;o++)n.LOG_TABLE[n.EXP_TABLE[o]]=o;function p(a,b,c){var d=f(a,b);var e=0;for(var g=0;g<d.length;g++)e+=d[g].dataCount;var h=new Array(e);var i=0;for(var j=0;j<c.length;j++){var k2=c[j];var l2=k2.getMode();var m2=k2.getLength();var n2=new c2;n2.put(l2,4);n2.put(m2,l(a,l2));k2.write(n2);for(var o=0;o<n2.buffer.length;o++)h[i++]=n2.buffer[o]}var p2=0;for(var q=0;q<d.length;q++)p2+=d[q].dataCount;if(i>p2)throw new Error("code length overflow. ("+i+">"+p2+")");if(i==p2-1)h[i++]=0;var r=new Array(d.length);var s=new Array(d.length);var t=0;for(var u=0;u<d.length;u++){var v=d[u].dataCount;var w=d[u].totalCount-v;r[u]=new Array(v);for(var x=0;x<r[u].length;x++)r[u][x]=0xff&h[t++];s[u]=new Array(w);var y=k.getErrorCorrectPolynomial(w);var z=new m(r[u],y.getLength()-1);var A=z.mod(y);s[u]=new Array(y.getLength()-1);for(var x=0;x<s[u].length;x++){var B=x+A.getLength()-s[u].length;s[u][x]=(B>=0)?A.get(B):0}}var C=0;for(var D=0;D<d.length;D++)C+=d[D].totalCount;var E=new Array(C);var F=0;var G=Math.max(r[0].length,r[d.length-1]?r[d.length-1].length:0);for(var H=0;H<G;H++){for(var I=0;I<d.length;I++){if(H<r[I].length)E[F++]=r[I][H]}}var G2=Math.max(s[0].length,s[d.length-1]?s[d.length-1].length:0);for(var H=0;H<G2;H++){for(var I=0;I<d.length;I++){if(H<s[I].length)E[F++]=s[I][H]}}return E}return g})();
+
+const ST=[
+  {id:'arabic',name:'اللغة العربية',icon:'📖',q:[
+    {t:'mcq',tx:'ما اللغة الرسمية لدولة الإمارات؟',op:['الإنجليزية','العربية','الفارسية','الأردية'],c:1},
+    {t:'tf',tx:'اللغة العربية هي لغة التعليم والإعلام والتقنية في الإمارات',c:true},
+    {t:'mcq',tx:'كان الأجداد يبدعون في اللغة العربية من خلال:',op:['الشعر النبطي والحكايات','الموسيقى الغربية','الأفلام الأجنبية','الكتب العلمية فقط'],c:0},
+    {t:'tf',tx:'الحرف هو أصغر وحدة في اللغة العربية تتكون منها الكلمات',c:true},
+    {t:'mcq',tx:'اللغة العربية هي هوية ووطن وأيضاً:',op:['قيد','عبء','روح ثقافتنا','لغة أجنبية'],c:2},
+  ]},
+  {id:'history',name:'التاريخ الإماراتي',icon:'🏰',q:[
+    {t:'mcq',tx:'متى قامت دولة الإمارات العربية المتحدة؟',op:['2 ديسمبر 1971','1 يناير 1980','2 ديسمبر 1966','4 يوليو 1971'],c:0},
+    {t:'tf',tx:'قصر الحصن في أبوظبي أحد أقدم المعالم التاريخية الإماراتية',c:true},
+    {t:'mcq',tx:'بماذا اشتهرت أبوظبي في حضارة أم النار قبل 4000 عام؟',op:['صناعة الطائرات','صناعة الفخار والنحاس والتجارة','الزراعة فقط','البناء'],c:1},
+    {t:'mcq',tx:'ما المهنة التي اعتمد عليها الأجداد كمصدر رزق رئيسي؟',op:['الزراعة','التجارة البرية','الغوص على اللؤلؤ','الصناعة'],c:2},
+    {t:'tf',tx:'مسبار الأمل الإماراتي وصل إلى كوكب المريخ عام 2021',c:true},
+  ]},
+  {id:'islam',name:'الدين الإسلامي',icon:'🕌',q:[
+    {t:'tf',tx:'الإسلام هو الدين الرسمي لدولة الإمارات العربية المتحدة',c:true},
+    {t:'mcq',tx:'وصف الشيخ زايد الإسلام بأنه دين:',op:['التسامح والرحمة','الحرب','التجارة فقط','العرب فقط'],c:0},
+    {t:'mcq',tx:'الإسلام يحثنا على طلب العلم من أجل:',op:['الثراء المادي','التفوق على الغير','التعلم والتفكر والبحث','الشهرة'],c:2},
+    {t:'tf',tx:'قيم الإسلام الأساسية: الرحمة والتسامح والاحترام',c:true},
+    {t:'mcq',tx:'مبادرات مثل إفطار الصائمين تشجع على:',op:['التنافس','التكافل والتعاون','الادخار','الانعزال'],c:1},
+  ]},
+  {id:'values',name:'القيم والتقاليد',icon:'☕',q:[
+    {t:'mcq',tx:'أي قيمة تعني الترحيب بالضيف وتقديم أفضل ما لديك؟',op:['الأمانة','الكرم والضيافة','التعاون','الانتماء'],c:1},
+    {t:'tf',tx:'القهوة العربية رمز للضيافة والأصالة في ثقافتنا',c:true},
+    {t:'mcq',tx:'ما القيمة التي تعني الصدق والمحافظة على الثقة؟',op:['الكرم','الانتماء','الأمانة','التعاون'],c:2},
+    {t:'mcq',tx:'أهمية مجالسنا وتجمعاتنا العائلية:',op:['لا أهمية لها','تعزز المحبة والمودة','تسبب المشاكل','مضيعة للوقت'],c:1},
+    {t:'tf',tx:'الاحترام يعني أن نحترم كبارنا ونتعامل بأدب مع الجميع',c:true},
+  ]},
+  {id:'culture',name:'الثقافة والتراث',icon:'🦅',q:[
+    {t:'mcq',tx:'الفن التراثي الذي يمثل نسج الأقمشة والسجاد التقليدي:',op:['الصقارة','السدو','الغوص','رقصة العيالة'],c:1},
+    {t:'tf',tx:'الصقارة فن تراثي إماراتي أصيل متوارث عن الأجداد',c:true},
+    {t:'mcq',tx:'السفن التقليدية التي استخدمها الأجداد في البحر:',op:['اليخوت الحديثة','السفن الشراعية (الداو)','الغواصات','العبّارات'],c:1},
+    {t:'mcq',tx:'أي أداة تراثية تستخدم لتقديم القهوة العربية؟',op:['الطبل','الدلة','المجمرة','السيف'],c:1},
+    {t:'tf',tx:'رقصة العيالة فن شعبي يعكس روح الوحدة والانتماء',c:true},
+  ]},
+  {id:'citizenship',name:'المواطنة والولاء',icon:'🇦🇪',q:[
+    {t:'mcq',tx:'كم عدد الإمارات التي تأسست عليها الدولة عام 1971؟',op:['خمس','ست','سبع','أربع'],c:2},
+    {t:'tf',tx:'المواطنة الرقمية تعني استخدام التقنية بأمانة ومسؤولية',c:true},
+    {t:'mcq',tx:'ماذا يعني الانتماء للهوية الإماراتية؟',op:['الفخر بهويتنا والمحافظة على ثقافتنا','رفض التعامل مع الآخرين','تجاهل تراثنا','تقليد الآخرين فقط'],c:0},
+    {t:'mcq',tx:'التسامح واحترام التنوع يعني:',op:['رفض من يختلف عنا','احترام الآخرين وتقبل الاختلاف','التمييز بين الناس','الانعزال'],c:1},
+    {t:'tf',tx:'المشاركة في خدمة المجتمع واجب على كل مواطن',c:true},
+  ]},
+];
+let G={name:'',cSt:null,cQ:0,sc:0,stSc:0,done:{},tiv:null,tl:20,ans:false};
+function startGame(){
+  const n=document.getElementById('pname').value.trim();
+  if(!n){alert('من فضلك أدخل اسمك 😊');return;}
+  G.name=n;G.sc=0;G.done={};show('s-map');renderMap();
+}
+function renderMap(){
+  document.getElementById('mpn').textContent=G.name;
+  document.getElementById('msc').textContent=G.sc;
+  const d=Object.keys(G.done).length;
+  document.getElementById('prog').style.width=(d/ST.length*100)+'%';
+  const g=document.getElementById('sg');g.innerHTML='';
+  ST.forEach((s,i)=>{
+    const dn=!!G.done[s.id];
+    const el=document.createElement('div');
+    el.className='sc'+(dn?' dn':'');
+    el.innerHTML=`<div class="sb2">${s.icon}</div><div class="se">${s.icon}</div><div class="sn">${s.name}</div><div class="ss">${dn?'✅ مكتمل':'ابدأ الآن'}</div>`;
+    if(!dn)el.onclick=()=>startSt(i);
+    g.appendChild(el);
+  });
+  document.getElementById('finish-btn').style.display=d===ST.length?'flex':'none';
+}
+function startSt(i){
+  G.cSt=i;G.cQ=0;G.stSc=0;
+  const s=ST[i];
+  document.getElementById('qi').textContent=s.icon;
+  document.getElementById('qtit').textContent=s.name;
+  show('s-quiz');renderQ();
+}
+function renderQ(){
+  clearInterval(G.tiv);G.ans=false;
+  const s=ST[G.cSt],q=s.q[G.cQ];
+  document.getElementById('qcnt').textContent=`سؤال ${G.cQ+1} من ${s.q.length}`;
+  document.getElementById('qtext').textContent=q.tx;
+  document.getElementById('fb').className='fb';
+  document.getElementById('nxtbtn').style.display='none';
+  document.getElementById('qbadge').textContent=q.t==='mcq'?'اختر الإجابة الصحيحة':'صح أم خطأ؟';
+  renderA(q);startTimer();
+}
+function renderA(q){
+  const a=document.getElementById('ans');a.innerHTML='';
+  if(q.t==='mcq'){
+    const g=document.createElement('div');g.className='og';
+    ['أ','ب','ج','د'].forEach((L,i)=>{
+      const b=document.createElement('button');b.className='ob';
+      b.innerHTML=`<span class="ol">${L}</span>${q.op[i]}`;
+      b.onclick=()=>ansMCQ(i,q.c,b,q.op);
+      g.appendChild(b);
+    });
+    a.appendChild(g);
+  } else {
+    const g=document.createElement('div');g.className='tfg';
+    ['✅ صح','❌ خطأ'].forEach((lbl,i)=>{
+      const b=document.createElement('button');b.className='tfb';
+      b.textContent=lbl;b.onclick=()=>ansTF(i===0,q.c,b,g);
+      g.appendChild(b);
+    });
+    a.appendChild(g);
+  }
+}
+function ansMCQ(ch,co,btn,ops){
+  if(G.ans)return;G.ans=true;clearInterval(G.tiv);
+  document.querySelectorAll('.ob').forEach(b=>b.disabled=true);
+  if(ch===co){btn.classList.add('cor');addPts(10);showFB(true,'🌟 إجابة صحيحة! أحسنت!');}
+  else{btn.classList.add('wr');document.querySelectorAll('.ob')[co].classList.add('cor');showFB(false,'❌ الإجابة الصحيحة: '+ops[co]);}
+  document.getElementById('nxtbtn').style.display='flex';
+}
+function ansTF(ch,co,btn,g){
+  if(G.ans)return;G.ans=true;clearInterval(G.tiv);
+  g.querySelectorAll('.tfb').forEach(b=>b.disabled=true);
+  if(ch===co){btn.classList.add('cor');addPts(10);showFB(true,'🌟 إجابة صحيحة! ممتاز!');}
+  else{btn.classList.add('wr');g.querySelectorAll('.tfb')[co?0:1].classList.add('cor');showFB(false,'❌ الإجابة الصحيحة: '+(co?'صح ✅':'خطأ ❌'));}
+  document.getElementById('nxtbtn').style.display='flex';
+}
+function addPts(p){G.sc+=p;G.stSc+=p;document.getElementById('msc').textContent=G.sc;}
+function showFB(ok,msg){
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(ok?'fok':'ferr');
+  document.getElementById('fbi').textContent=ok?'✅':'❌';
+  document.getElementById('fbt').textContent=msg;
+}
+function startTimer(){
+  G.tl=20;
+  const d=document.getElementById('timer');
+  d.className='ti';d.textContent='⏱ '+G.tl;
+  G.tiv=setInterval(()=>{
+    G.tl--;d.textContent='⏱ '+G.tl;
+    if(G.tl<=5)d.className='ti red';
+    if(G.tl<=0){
+      clearInterval(G.tiv);
+      if(!G.ans){
+        G.ans=true;
+        document.querySelectorAll('.ob,.tfb').forEach(b=>b.disabled=true);
+        showFB(false,'⏰ انتهى الوقت!');
+        document.getElementById('nxtbtn').style.display='flex';
+      }
+    }
+  },1000);
+}
+function nextQ(){G.cQ++;if(G.cQ>=ST[G.cSt].q.length)finishSt();else renderQ();}
+function finishSt(){
+  clearInterval(G.tiv);
+  const s=ST[G.cSt];G.done[s.id]={score:G.stSc};
+  document.getElementById('stei').textContent=s.icon;
+  document.getElementById('stename').textContent='ختم '+s.name;
+  document.getElementById('stepts').textContent='حصلت على '+G.stSc+' نقطة في هذه المحطة';
+  show('s-stamp');
+}
+function backToMap(){show('s-map');renderMap();}
+function genCode(name,score){
+  const ts=Date.now().toString(36).toUpperCase();
+  const sc=score.toString(36).toUpperCase().padStart(2,'0');
+  const nm=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0).toString(36).toUpperCase().padStart(3,'0');
+  return `UAE-${nm}-${sc}${ts.slice(-2)}-${ts.slice(0,5)}`;
+}
+function showCert(){
+  const code=genCode(G.name,G.sc);
+  document.getElementById('cname').textContent=G.name;
+  document.getElementById('cscore').textContent=G.sc+' / '+(ST.length*50);
+  const pct=Math.round(G.sc/(ST.length*50)*100);
+  document.getElementById('cstars').textContent=pct>=90?'⭐⭐⭐⭐⭐':pct>=70?'⭐⭐⭐⭐':pct>=50?'⭐⭐⭐':'⭐⭐';
+  document.getElementById('ccode').textContent=code;
+  const now=new Date();
+  document.getElementById('cdate').textContent=`${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+  const cs=document.getElementById('cstamps');cs.innerHTML='';
+  ST.forEach(s=>{
+    const d=document.createElement('div');d.className='csi';
+    d.innerHTML=`<div class="csc">${s.icon}</div><div class="csl">${s.name}</div>`;
+    cs.appendChild(d);
+  });
+  const qrEl=document.getElementById('cert-qr');qrEl.innerHTML='';
+  const verifyUrl=window.location.href.split('?')[0]+'?v='+encodeURIComponent(code);
+  new QRCode(qrEl,{text:verifyUrl,width:68,height:68,colorDark:'#0d5c3a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  localStorage.setItem('c_'+code,JSON.stringify({name:G.name,score:G.sc,date:now.toLocaleDateString('ar-AE'),stations:Object.keys(G.done).length}));
+  show('s-cert');
+}
+function verifyCert(){
+  const code=document.getElementById('vinput').value.trim().toUpperCase();
+  const res=document.getElementById('vres');
+  res.style.display='block';
+  const data=localStorage.getItem('c_'+code);
+  if(data){
+    const d=JSON.parse(data);
+    res.className='vr vok';
+    res.innerHTML=`<div style="font-size:1.4rem;margin-bottom:.4rem">✅</div><div style="font-weight:700;color:#0d5c3a;margin-bottom:.4rem">شهادة صحيحة ومعتمدة</div><div style="font-size:.85rem;color:#333;line-height:1.9"><strong>الاسم:</strong> ${d.name}<br><strong>النقاط:</strong> ${d.score} / ${ST.length*50}<br><strong>المحطات:</strong> ${d.stations} من ${ST.length}<br><strong>التاريخ:</strong> ${d.date}</div>`;
+  } else {
+    res.className='vr vno';
+    res.innerHTML=`<div style="font-size:1.4rem;margin-bottom:.4rem">❌</div><div style="font-weight:700;color:#7f1c1c">رمز غير صحيح</div><div style="font-size:.82rem;color:#555;margin-top:.3rem">تأكد من الرمز أو أن الشهادة أُنشئت من هذا الجهاز</div>`;
+  }
+}
+function restartGame(){
+  G={name:'',cSt:null,cQ:0,sc:0,stSc:0,done:{},tiv:null,tl:20,ans:false};
+  document.getElementById('pname').value='';
+  show('s-intro');
+}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+const p=new URLSearchParams(window.location.search);
+if(p.get('v')){document.getElementById('vinput').value=decodeURIComponent(p.get('v'));show('s-verify');setTimeout(verifyCert,300);}
+</script>
+</body>
+</html>
