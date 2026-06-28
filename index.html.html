@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحلة الانتماء - الهوية الإماراتية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:#f0f4f8;min-height:100vh;direction:rtl}
+.wrap{max-width:500px;margin:0 auto;padding:1rem}
+.screen{display:none;animation:fi .3s ease}
+.screen.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a3a5c,#0d5c3a);border-radius:18px;padding:2rem 1.5rem;text-align:center;color:white;margin-bottom:1.25rem}
+.hero-icon{font-size:2.5rem;margin-bottom:.5rem}
+.hero-t{font-size:1.9rem;font-weight:900;margin-bottom:.3rem}
+.hero-s{font-size:.9rem;opacity:.85}
+
+/* CARDS */
+.card{background:white;border-radius:14px;padding:1.25rem;margin-bottom:.75rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+label{font-size:.9rem;color:#666;display:block;margin-bottom:.5rem;text-align:center}
+input[type=text]{width:100%;padding:.75rem 1rem;border-radius:10px;border:1.5px solid #ddd;font-family:'Cairo',sans-serif;font-size:1.05rem;text-align:center;background:#fafafa;color:#222;outline:none;transition:border .2s}
+input[type=text]:focus{border-color:#1a3a5c}
+
+/* BUTTONS */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:.9rem;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:.5rem}
+.btn-primary{background:#1a3a5c;color:white}
+.btn-primary:hover{background:#0d2a45}
+.btn-green{background:#0d5c3a;color:white}
+.btn-green:hover{background:#094d30}
+.btn-gold{background:#c8a84b;color:white}
+.btn-gold:hover{background:#a88a35}
+.btn-outline{background:white;color:#1a3a5c;border:2px solid #1a3a5c}
+.btn-outline:hover{background:#e8f0f8}
+.btn-sm{padding:.65rem 1.25rem;width:auto;font-size:.9rem;border-radius:8px}
+
+/* PROGRESS */
+.progress-wrap{background:#e8edf2;border-radius:8px;height:10px;margin-bottom:1rem;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a3a5c,#0d5c3a);border-radius:8px;transition:width .6s ease}
+.map-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;gap:.5rem;flex-wrap:wrap}
+.badge-name{background:white;border-radius:8px;padding:.4rem .9rem;font-size:.85rem;color:#555;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.badge-score{background:#1a3a5c;color:white;border-radius:8px;padding:.4rem .9rem;font-size:.9rem;font-weight:700}
+
+/* STATIONS */
+.stations{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1rem}
+.station{background:white;border-radius:12px;padding:.9rem;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s;position:relative;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.station:hover:not(.done):not(.locked){border-color:#1a3a5c;transform:translateY(-2px)}
+.station.done{border-color:#0d5c3a;background:#f0faf5}
+.station.locked{opacity:.45;cursor:not-allowed}
+.station-emoji{font-size:2rem;margin-bottom:.3rem}
+.station-name{font-size:.78rem;font-weight:700;color:#222;margin-bottom:.2rem}
+.station-status{font-size:.7rem;color:#888}
+.stamp-badge{position:absolute;top:5px;left:5px;width:30px;height:30px;border-radius:50%;border:2px solid #0d5c3a;background:white;display:flex;align-items:center;justify-content:center;font-size:.9rem;transform:scale(0);transition:transform .4s cubic-bezier(.175,.885,.32,1.275)}
+.station.done .stamp-badge{transform:scale(1)}
+
+/* QUIZ */
+.quiz-header{background:white;border-radius:12px;padding:.9rem 1rem;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.timer{background:#faeeda;color:#633806;border-radius:8px;padding:.35rem .75rem;font-weight:700;font-size:.95rem;min-width:56px;text-align:center}
+.timer.red{background:#fcebeb;color:#791f1f}
+.qcard{background:white;border-radius:12px;padding:1.1rem;margin-bottom:.75rem;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.qtype{display:inline-block;background:#e6f1fb;color:#0c447c;border-radius:6px;padding:3px 10px;font-size:.72rem;font-weight:700;margin-bottom:.6rem}
+.qtext{font-size:1rem;font-weight:600;color:#222;line-height:1.65}
+.options{display:grid;gap:.55rem;margin-bottom:.75rem}
+.opt{display:flex;align-items:center;gap:10px;padding:.85rem .9rem;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.92rem;color:#222;text-align:right;transition:all .15s;width:100%}
+.opt:hover:not(:disabled){border-color:#1a3a5c;background:#eef4fb}
+.opt.correct{background:#e8f7ef;border-color:#0d5c3a;color:#0d5c3a}
+.opt.wrong{background:#fdecea;border-color:#c62828;color:#7f1c1c}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:#f0f0f0;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.tf-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem}
+.tf-btn{padding:1.1rem;border-radius:10px;border:1.5px solid #e0e0e0;background:white;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .15s;color:#222}
+.tf-btn:hover:not(:disabled){transform:scale(1.02)}
+.tf-btn.correct{background:#e8f7ef;border-color:#0d5c3a;color:#0d5c3a}
+.tf-btn.wrong{background:#fdecea;border-color:#c62828;color:#7f1c1c}
+.feedback{border-radius:10px;padding:.85rem .9rem;margin-bottom:.75rem;font-size:.9rem;font-weight:600;display:none;align-items:flex-start;gap:8px;line-height:1.5}
+.feedback.show{display:flex}
+.fb-ok{background:#e8f7ef;color:#0d5c3a;border:1px solid #0d5c3a}
+.fb-err{background:#fdecea;color:#7f1c1c;border:1px solid #c62828}
+
+/* STAMP SCREEN */
+.stamp-win{border:3px solid #0d5c3a;border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1rem;background:white;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.stamp-big{width:100px;height:100px;border-radius:50%;border:4px solid #0d5c3a;background:#e8f7ef;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:3rem}
+
+/* CERTIFICATE */
+.cert-outer{background:white;border:4px double #c8a84b;border-radius:18px;padding:1.75rem 1.25rem;text-align:center;margin-bottom:1rem;position:relative}
+.cert-inner-border{border:1.5px solid #e8d5a0;border-radius:12px;padding:1.25rem;position:relative}
+.cert-corner{position:absolute;color:#c8a84b;font-size:1.3rem;line-height:1}
+.cert-corner.tl{top:8px;right:8px}.cert-corner.tr{top:8px;left:8px}
+.cert-corner.bl{bottom:8px;right:8px}.cert-corner.br{bottom:8px;left:8px}
+.cert-flag{font-size:2.2rem;margin-bottom:.4rem}
+.cert-title{font-size:1.75rem;font-weight:900;color:#c8a84b;margin-bottom:.2rem}
+.cert-sub{font-size:.72rem;color:#999;letter-spacing:.5px;margin-bottom:.75rem}
+.cert-hr{border:none;border-top:1.5px solid #e8d5a0;margin:.6rem 0}
+.cert-label{font-size:.78rem;color:#888;margin-bottom:.2rem}
+.cert-name{font-size:1.45rem;font-weight:900;color:#1a3a5c;border-bottom:2.5px solid #c8a84b;display:inline-block;padding-bottom:.3rem;margin:.3rem 0 .75rem}
+.cert-body{font-size:.78rem;color:#555;line-height:1.85;margin-bottom:.75rem}
+.cert-stamps{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+.cs-item{text-align:center}
+.cs-circle{width:44px;height:44px;border-radius:50%;border:2px solid #c8a84b;background:#faf5e8;margin:0 auto 2px;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+.cs-label{font-size:.55rem;color:#888;max-width:46px}
+.cert-score{font-size:2rem;font-weight:900;color:#1a3a5c;margin:.3rem 0}
+.cert-stars{color:#c8a84b;font-size:1.1rem;margin-bottom:.4rem}
+.verify-box{background:#f0faf5;border:1.5px solid #0d5c3a;border-radius:10px;padding:.75rem;margin:.75rem 0;display:flex;align-items:center;gap:.75rem;text-align:right}
+.verify-qr{flex-shrink:0}
+.verify-info{flex:1}
+.verify-code{font-size:.65rem;color:#0d5c3a;font-weight:700;word-break:break-all;font-family:monospace;margin-top:.25rem}
+.cert-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:.75rem;flex-wrap:wrap;gap:.5rem}
+.cert-sig{font-size:.68rem;color:#999}
+
+/* VERIFY SCREEN */
+.verify-screen{max-width:400px;margin:0 auto}
+.verify-result{border-radius:12px;padding:1.1rem;text-align:center;margin-top:1rem}
+.vr-valid{background:#e8f7ef;border:2px solid #0d5c3a}
+.vr-invalid{background:#fdecea;border:2px solid #c62828}
+
+@media print{
+  body{background:white}
+  .no-print{display:none!important}
+  .screen{display:none!important}
+  #screen-cert{display:block!important}
+  .cert-outer{border:4px double #c8a84b;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- INTRO -->
+<div class="screen active" id="screen-intro">
+  <div class="hero">
+    <div class="hero-icon">🗺️</div>
+    <div class="hero-t">رحلة الانتماء</div>
+    <div class="hero-s">اكتشف مكونات الهوية الإماراتية</div>
+  </div>
+  <div class="card">
+    <label>أدخل اسمك لتبدأ الرحلة</label>
+    <input type="text" id="pname" placeholder="اسمك هنا..." maxlength="30" style="margin-bottom:1rem">
+    <button class="btn btn-primary" onclick="startGame()">ابدأ الرحلة ←</button>
+  </div>
+  <div class="card" style="text-align:center;font-size:.8rem;color:#666;line-height:1.8">
+    <strong style="color:#222">كيف تلعب؟</strong><br>
+    6 محطات • أسئلة متنوعة • اختام • شهادة برمز تحقق
+  </div>
+  <div style="text-align:center;margin-top:.75rem">
+    <button class="btn btn-outline btn-sm" style="width:auto;margin:0 auto" onclick="show('screen-verify-input')">🔍 تحقق من شهادة</button>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="screen" id="screen-map">
+  <div class="map-header">
+    <div class="badge-name">🧭 <span id="map-pname"></span></div>
+    <div class="badge-score">⭐ <span id="map-score">0</span> نقطة</div>
+  </div>
+  <div class="progress-wrap"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  <div class="stations" id="stations-grid"></div>
+  <button class="btn btn-green no-print" id="finish-btn" style="display:none" onclick="showCert()">🏆 احصل على شهادتك</button>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="screen-quiz">
+  <div class="quiz-header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:1.6rem" id="q-icon"></span>
+      <div>
+        <div style="font-weight:700;font-size:.95rem;color:#222" id="q-title"></div>
+        <div style="font-size:.72rem;color:#888" id="q-count"></div>
+      </div>
+    </div>
+    <div class="timer" id="timer">⏱ 20</div>
+  </div>
+  <div class="qcard">
+    <div class="qtype" id="qtype"></div>
+    <div class="qtext" id="qtext"></div>
+  </div>
+  <div id="answers-area"></div>
+  <div class="feedback" id="feedback"><span id="fb-icon"></span><span id="fb-text"></span></div>
+  <button class="btn btn-primary no-print" id="next-btn" style="display:none" onclick="nextQ()">السؤال التالي ←</button>
+</div>
+
+<!-- STAMP -->
+<div class="screen" id="screen-stamp">
+  <div class="stamp-win">
+    <div class="stamp-big" id="stamp-emoji"></div>
+    <div style="font-size:1.15rem;font-weight:700;color:#0d5c3a" id="stamp-name"></div>
+    <div style="font-size:.85rem;color:#666;margin-top:.3rem" id="stamp-pts"></div>
+  </div>
+  <div style="text-align:center;font-size:1.3rem;margin-bottom:.75rem">🎉 مبروك! حصلت على الختم</div>
+  <button class="btn btn-primary" onclick="backToMap()">← العودة للخريطة</button>
+</div>
+
+<!-- CERTIFICATE -->
+<div class="screen" id="screen-cert">
+  <div class="cert-outer" id="cert-area">
+    <div class="cert-inner-border">
+      <span class="cert-corner tl">✦</span><span class="cert-corner tr">✦</span>
+      <span class="cert-corner bl">✦</span><span class="cert-corner br">✦</span>
+      <div class="cert-flag">🇦🇪</div>
+      <div class="cert-title">شهادة تقدير</div>
+      <div class="cert-sub">رحلة الانتماء — الهوية الإماراتية</div>
+      <hr class="cert-hr">
+      <div class="cert-label">تُمنح هذه الشهادة إلى</div>
+      <div><span class="cert-name" id="c-name"></span></div>
+      <div class="cert-body">
+        تقديراً لإتمامه رحلة الانتماء باجتهاد ونجاح،<br>
+        واكتشافه مكونات الهوية الإماراتية الأصيلة في محطاتها الست.
+      </div>
+      <div class="cert-stamps" id="c-stamps"></div>
+      <hr class="cert-hr">
+      <div class="cert-label">مجموع النقاط</div>
+      <div class="cert-score" id="c-score"></div>
+      <div class="cert-stars" id="c-stars"></div>
+      <hr class="cert-hr">
+      <div style="font-size:.72rem;color:#555;margin-bottom:.5rem;font-weight:600">رمز التحقق من الشهادة</div>
+      <div class="verify-box">
+        <div class="verify-qr" id="cert-qr-box"></div>
+        <div class="verify-info">
+          <div style="font-size:.72rem;color:#0d5c3a;font-weight:700">امسح لتحقق من الشهادة</div>
+          <div class="verify-code" id="c-code"></div>
+        </div>
+      </div>
+      <div class="cert-bottom">
+        <div class="cert-sig">التوقيع: ........................</div>
+        <div class="cert-sig" id="c-date"></div>
+      </div>
+      <div class="cert-sig" style="margin-top:.5rem;text-align:center">سائلين الله لك دوام التوفيق والنجاح 🌟</div>
+    </div>
+  </div>
+  <div class="no-print">
+    <button class="btn btn-gold" onclick="window.print()">🖨️ طباعة الشهادة / حفظ PDF</button>
+    <button class="btn btn-outline" onclick="restartGame()">🔄 العب مجدداً</button>
+    <div class="card" style="font-size:.75rem;color:#666;text-align:center;line-height:1.7">
+      عند الطباعة: اختر <strong>"حفظ كـ PDF"</strong> من قائمة الطابعات<br>
+      المعلم يستطيع مسح رمز QR في الشهادة للتحقق منها
+    </div>
+  </div>
+</div>
+
+<!-- VERIFY INPUT -->
+<div class="screen" id="screen-verify-input">
+  <div class="card verify-screen">
+    <div style="text-align:center;font-size:1.5rem;margin-bottom:.75rem">🔍</div>
+    <div style="text-align:center;font-size:1rem;font-weight:700;color:#222;margin-bottom:.5rem">التحقق من شهادة</div>
+    <label>أدخل رمز التحقق من الشهادة</label>
+    <input type="text" id="verify-input" placeholder="UAE-XXXX-XXXX-XXXXX" style="margin-bottom:1rem;font-family:monospace;font-size:.9rem">
+    <button class="btn btn-primary" onclick="verifyCert()">تحقق من الشهادة</button>
+    <button class="btn btn-outline" onclick="show('screen-intro')" style="margin-top:.25rem">← العودة</button>
+    <div class="verify-result" id="verify-result" style="display:none"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const STATIONS=[
+  {id:'arabic',name:'اللغة العربية',icon:'📖',
+   q:[
+    {t:'mcq',tx:'ما هي اللغة الرسمية لدولة الإمارات العربية المتحدة؟',op:['الإنجليزية','العربية','الفارسية','الأردية'],c:1},
+    {t:'tf',tx:'اللغة العربية هي لغة التعليم والإعلام والتقنية في الإمارات',c:true},
+    {t:'mcq',tx:'كان الأجداد يتحدثون العربية ويبدعون في:',op:['الشعر النبطي والحكايات','الموسيقى الغربية','الأفلام الأجنبية','الكتب العلمية فقط'],c:0},
+    {t:'tf',tx:'الحرف هو أصغر وحدة في اللغة العربية تتكون منها الكلمات',c:true},
+    {t:'mcq',tx:'اللغة العربية هي هوية ووطن وما أيضاً؟',op:['قيد','عبء','روح ثقافتنا','لغة أجنبية'],c:2},
+  ]},
+  {id:'history',name:'التاريخ الإماراتي',icon:'🏰',
+   q:[
+    {t:'mcq',tx:'متى قامت دولة الإمارات العربية المتحدة؟',op:['2 ديسمبر 1971','1 يناير 1980','2 ديسمبر 1966','4 يوليو 1971'],c:0},
+    {t:'tf',tx:'قصر الحصن في أبوظبي هو أحد أقدم المعالم التاريخية الإماراتية',c:true},
+    {t:'mcq',tx:'بماذا اشتُهرت أبوظبي قبل 4000 عام في حضارة أم النار؟',op:['صناعة الطائرات','صناعة الفخار والنحاس والتجارة','الزراعة فقط','البناء والهندسة'],c:1},
+    {t:'mcq',tx:'ما المهنة التي اعتمد عليها الأجداد كمصدر رزق رئيسي؟',op:['الزراعة','التجارة البرية','الغوص على اللؤلؤ','الصناعة'],c:2},
+    {t:'tf',tx:'مسبار الأمل وصل إلى كوكب المريخ عام 2021',c:true},
+  ]},
+  {id:'islam',name:'الدين الإسلامي',icon:'🕌',
+   q:[
+    {t:'tf',tx:'الإسلام هو الدين الرسمي لدولة الإمارات العربية المتحدة',c:true},
+    {t:'mcq',tx:'وصف الشيخ زايد الإسلام بأنه دين:',op:['التسامح والرحمة','الحرب','التجارة فقط','العرب فقط'],c:0},
+    {t:'mcq',tx:'الإسلام يحثّنا على طلب العلم من أجل:',op:['الثراء المادي','التفوق على الغير','التعلم والتفكر والبحث','الشهرة'],c:2},
+    {t:'tf',tx:'قيم الإسلام الأساسية في مجتمعنا هي الرحمة والتسامح والاحترام',c:true},
+    {t:'mcq',tx:'مبادرات مثل إفطار الصائمين تشجع على:',op:['التنافس','التكافل والتعاون','الادخار','الانعزال'],c:1},
+  ]},
+  {id:'values',name:'القيم والتقاليد',icon:'☕',
+   q:[
+    {t:'mcq',tx:'أي قيمة تعني الترحيب بالضيف وتقديم أفضل ما لديك؟',op:['الأمانة','الكرم والضيافة','التعاون','الانتماء'],c:1},
+    {t:'tf',tx:'القهوة العربية رمز للضيافة والأصالة في ثقافتنا الإماراتية',c:true},
+    {t:'mcq',tx:'ما القيمة التي تعني الصدق والمحافظة على الثقة؟',op:['الكرم','الانتماء','الأمانة','التعاون'],c:2},
+    {t:'mcq',tx:'ما أهمية المجالس والتجمعات العائلية في ثقافتنا؟',op:['لا أهمية لها','تعزز المحبة والمودة','تسبب المشاكل','مضيعة للوقت'],c:1},
+    {t:'tf',tx:'الاحترام يعني أن نحترم كبارنا ونتعامل بأدب مع الجميع',c:true},
+  ]},
+  {id:'culture',name:'الثقافة والتراث',icon:'🦅',
+   q:[
+    {t:'mcq',tx:'ما الفن التراثي الذي يمثّل نسج الأقمشة والسجاد التقليدي؟',op:['الصقارة','السدو','الغوص','رقصة العيالة'],c:1},
+    {t:'tf',tx:'الصقارة فن تراثي إماراتي أصيل متوارث عن الأجداد',c:true},
+    {t:'mcq',tx:'ما السفن التقليدية التي استخدمها الأجداد في البحر؟',op:['اليخوت الحديثة','السفن الشراعية (الداو)','الغواصات','العبّارات'],c:1},
+    {t:'mcq',tx:'أي أداة تراثية تُستخدم لتقديم القهوة العربية؟',op:['الطبل','الدلة','المجمرة','السيف'],c:1},
+    {t:'tf',tx:'رقصة العيالة فن شعبي يعكس روح الوحدة والانتماء',c:true},
+  ]},
+  {id:'citizenship',name:'المواطنة والولاء',icon:'🇦🇪',
+   q:[
+    {t:'mcq',tx:'كم عدد الإمارات التي تأسست عليها الدولة عام 1971؟',op:['خمس','ست','سبع','أربع'],c:2},
+    {t:'tf',tx:'المواطنة الرقمية تعني استخدام التقنية بأمانة ومسؤولية',c:true},
+    {t:'mcq',tx:'ماذا يعني الانتماء للهوية الإماراتية؟',op:['الفخر بهويتنا والمحافظة على ثقافتنا','رفض التعامل مع الآخرين','تجاهل تراثنا','تقليد الآخرين فقط'],c:0},
+    {t:'mcq',tx:'التسامح واحترام التنوع يعني:',op:['رفض من يختلف عنا','احترام الآخرين وتقبّل الاختلاف','التمييز بين الناس','الانعزال'],c:1},
+    {t:'tf',tx:'المشاركة في خدمة المجتمع واجب على كل مواطن',c:true},
+  ]},
+];
+
+let G={name:'',curSt:null,curQ:0,score:0,stScore:0,done:{},tiv:null,tLeft:20,ans:false};
+
+function startGame(){
+  const n=document.getElementById('pname').value.trim();
+  if(!n){alert('من فضلك أدخل اسمك 😊');return;}
+  G.name=n;G.score=0;G.done={};
+  show('screen-map');renderMap();
+}
+
+function renderMap(){
+  document.getElementById('map-pname').textContent=G.name;
+  document.getElementById('map-score').textContent=G.score;
+  const done=Object.keys(G.done).length;
+  document.getElementById('prog').style.width=(done/STATIONS.length*100)+'%';
+  const grid=document.getElementById('stations-grid');grid.innerHTML='';
+  STATIONS.forEach((s,i)=>{
+    const d=!!G.done[s.id];
+    const el=document.createElement('div');
+    el.className='station'+(d?' done':'');
+    el.innerHTML=`<div class="stamp-badge">${s.icon}</div><div class="station-emoji">${s.icon}</div><div class="station-name">${s.name}</div><div class="station-status">${d?'✅ مكتمل':'ابدأ الآن'}</div>`;
+    if(!d)el.onclick=()=>startSt(i);
+    grid.appendChild(el);
+  });
+  document.getElementById('finish-btn').style.display=done===STATIONS.length?'flex':'none';
+}
+
+function startSt(i){
+  G.curSt=i;G.curQ=0;G.stScore=0;
+  const s=STATIONS[i];
+  document.getElementById('q-icon').textContent=s.icon;
+  document.getElementById('q-title').textContent=s.name;
+  show('screen-quiz');renderQ();
+}
+
+function renderQ(){
+  clearInterval(G.tiv);G.ans=false;
+  const s=STATIONS[G.curSt],q=s.q[G.curQ];
+  document.getElementById('q-count').textContent=`سؤال ${G.curQ+1} من ${s.q.length}`;
+  document.getElementById('qtext').textContent=q.tx;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('qtype').textContent=q.t==='mcq'?'اختر الإجابة الصحيحة':'صح أم خطأ؟';
+  renderAnswers(q);startTimer();
+}
+
+function renderAnswers(q){
+  const area=document.getElementById('answers-area');area.innerHTML='';
+  if(q.t==='mcq'){
+    const g=document.createElement('div');g.className='options';
+    const L=['أ','ب','ج','د'];
+    q.op.forEach((op,i)=>{
+      const b=document.createElement('button');b.className='opt';
+      b.innerHTML=`<span class="opt-letter">${L[i]}</span>${op}`;
+      b.onclick=()=>ansMCQ(i,q.c,b,q.op);
+      g.appendChild(b);
+    });
+    area.appendChild(g);
+  } else {
+    const g=document.createElement('div');g.className='tf-grid';
+    ['✅ صح','❌ خطأ'].forEach((lbl,i)=>{
+      const b=document.createElement('button');b.className='tf-btn';
+      b.textContent=lbl;b.onclick=()=>ansTF(i===0,q.c,b,g);
+      g.appendChild(b);
+    });
+    area.appendChild(g);
+  }
+}
+
+function ansMCQ(ch,co,btn,ops){
+  if(G.ans)return;G.ans=true;clearInterval(G.tiv);
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  if(ch===co){btn.classList.add('correct');addPts(10);showFB(true,'🌟 إجابة صحيحة! أحسنت!');}
+  else{btn.classList.add('wrong');document.querySelectorAll('.opt')[co].classList.add('correct');showFB(false,'❌ الإجابة الصحيحة: '+ops[co]);}
+  document.getElementById('next-btn').style.display='flex';
+}
+
+function ansTF(ch,co,btn,g){
+  if(G.ans)return;G.ans=true;clearInterval(G.tiv);
+  g.querySelectorAll('.tf-btn').forEach(b=>b.disabled=true);
+  if(ch===co){btn.classList.add('correct');addPts(10);showFB(true,'🌟 إجابة صحيحة! ممتاز!');}
+  else{btn.classList.add('wrong');g.querySelectorAll('.tf-btn')[co?0:1].classList.add('correct');showFB(false,'❌ الإجابة الصحيحة: '+(co?'صح ✅':'خطأ ❌'));}
+  document.getElementById('next-btn').style.display='flex';
+}
+
+function addPts(p){G.score+=p;G.stScore+=p;document.getElementById('map-score').textContent=G.score;}
+
+function showFB(ok,msg){
+  const fb=document.getElementById('feedback');
+  fb.className='feedback show '+(ok?'fb-ok':'fb-err');
+  document.getElementById('fb-icon').textContent=ok?'✅':'❌';
+  document.getElementById('fb-text').textContent=msg;
+}
+
+function startTimer(){
+  G.tLeft=20;
+  const d=document.getElementById('timer');
+  d.className='timer';d.textContent='⏱ '+G.tLeft;
+  G.tiv=setInterval(()=>{
+    G.tLeft--;d.textContent='⏱ '+G.tLeft;
+    if(G.tLeft<=5)d.className='timer red';
+    if(G.tLeft<=0){
+      clearInterval(G.tiv);
+      if(!G.ans){
+        G.ans=true;
+        document.querySelectorAll('.opt,.tf-btn').forEach(b=>b.disabled=true);
+        showFB(false,'⏰ انتهى الوقت!');
+        document.getElementById('next-btn').style.display='flex';
+      }
+    }
+  },1000);
+}
+
+function nextQ(){
+  G.curQ++;
+  if(G.curQ>=STATIONS[G.curSt].q.length)finishSt();
+  else renderQ();
+}
+
+function finishSt(){
+  clearInterval(G.tiv);
+  const s=STATIONS[G.curSt];
+  G.done[s.id]={score:G.stScore};
+  document.getElementById('stamp-emoji').textContent=s.icon;
+  document.getElementById('stamp-name').textContent='ختم '+s.name;
+  document.getElementById('stamp-pts').textContent='حصلت على '+G.stScore+' نقطة في هذه المحطة';
+  show('screen-stamp');
+}
+
+function backToMap(){show('screen-map');renderMap();}
+
+function genCode(name,score){
+  const ts=Date.now().toString(36).toUpperCase();
+  const sc=score.toString(36).toUpperCase().padStart(2,'0');
+  const nm=name.split('').reduce((a,c)=>a+c.charCodeAt(0),0).toString(36).toUpperCase().padStart(3,'0');
+  return `UAE-${nm}-${sc}${ts.slice(-2)}-${ts.slice(0,5)}`;
+}
+
+function showCert(){
+  const code=genCode(G.name,G.score);
+  document.getElementById('c-name').textContent=G.name;
+  document.getElementById('c-score').textContent=G.score+' / '+(STATIONS.length*50);
+  const pct=Math.round(G.score/(STATIONS.length*50)*100);
+  document.getElementById('c-stars').textContent=pct>=90?'⭐⭐⭐⭐⭐':pct>=70?'⭐⭐⭐⭐':pct>=50?'⭐⭐⭐':'⭐⭐';
+  document.getElementById('c-code').textContent=code;
+  const now=new Date();
+  document.getElementById('c-date').textContent=`التاريخ: ${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+  const cs=document.getElementById('c-stamps');cs.innerHTML='';
+  STATIONS.forEach(s=>{
+    const d=document.createElement('div');d.className='cs-item';
+    d.innerHTML=`<div class="cs-circle">${s.icon}</div><div class="cs-label">${s.name}</div>`;
+    cs.appendChild(d);
+  });
+  const qrBox=document.getElementById('cert-qr-box');
+  qrBox.innerHTML='';
+  const verifyUrl=window.location.href.split('?')[0]+'?verify='+encodeURIComponent(code);
+  new QRCode(qrBox,{text:verifyUrl,width:72,height:72,colorDark:'#0d5c3a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  localStorage.setItem('cert_'+code,JSON.stringify({name:G.name,score:G.score,date:now.toLocaleDateString('ar-AE'),stations:Object.keys(G.done).length}));
+  show('screen-cert');
+}
+
+function verifyCert(){
+  const code=document.getElementById('verify-input').value.trim().toUpperCase();
+  const res=document.getElementById('verify-result');
+  res.style.display='block';
+  const data=localStorage.getItem('cert_'+code);
+  if(data){
+    const d=JSON.parse(data);
+    res.className='verify-result vr-valid';
+    res.innerHTML=`<div style="font-size:1.5rem;margin-bottom:.5rem">✅</div><div style="font-weight:700;font-size:1rem;color:#0d5c3a;margin-bottom:.5rem">شهادة صحيحة ومعتمدة</div><div style="font-size:.85rem;color:#333;line-height:1.8"><strong>الاسم:</strong> ${d.name}<br><strong>النقاط:</strong> ${d.score} / ${STATIONS.length*50}<br><strong>المحطات:</strong> ${d.stations} من ${STATIONS.length}<br><strong>التاريخ:</strong> ${d.date}</div>`;
+  } else {
+    res.className='verify-result vr-invalid';
+    res.innerHTML=`<div style="font-size:1.5rem;margin-bottom:.5rem">❌</div><div style="font-weight:700;font-size:1rem;color:#7f1c1c">رمز غير صحيح</div><div style="font-size:.82rem;color:#555;margin-top:.35rem">تأكد من الرمز أو أن الشهادة صدرت من هذا الجهاز</div>`;
+  }
+}
+
+function restartGame(){
+  G={name:'',curSt:null,curQ:0,score:0,stScore:0,done:{},tiv:null,tLeft:20,ans:false};
+  document.getElementById('pname').value='';
+  show('screen-intro');
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+const p=new URLSearchParams(window.location.search);
+if(p.get('verify')){
+  document.getElementById('verify-input').value=decodeURIComponent(p.get('verify'));
+  show('screen-verify-input');
+  setTimeout(verifyCert,300);
+}
+</script>
+</body>
+</html>
